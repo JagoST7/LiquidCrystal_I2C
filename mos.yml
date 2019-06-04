@@ -1,0 +1,25 @@
+author: JagoST7
+description: Implements I2C LCD driver on Mongoose OS
+type: lib
+version: 1.0
+
+platforms: [ esp32 ]
+
+libs:
+  - origin: https://github.com/mongoose-os-libs/i2c
+
+sources:
+  - src
+includes:
+  - include
+
+config_schema:
+        - ["i2c.enable", "b", true, {title: "Enable I2C"}]
+        - ["i2c.sda_gpio", "i", 21, {title: "GPIO to use for SDA"}]
+        - ["i2c.scl_gpio", "i", 22, {title: "GPIO to use for SCL"}]
+
+tags:
+  - cpp
+  - i2c
+
+manifest_version: 2017-09-29
