@@ -5,20 +5,27 @@ let LCD_I2C = {
     _stcrs: ffi('void mgos_lcd_i2c_setCursor(void *, int, int)'),
     _prntchar: ffi('void mgos_lcd_i2c_print(void *, char *)'),
 
+    DEFAULT_LCD_ADDRESS: 39,
     LCD_5x10DOTS: 4,
     LCD_5x8DOTS: 0,
 
-    create: function(addr) {
+    create: function (addr) {
         let obj = Object.create(LCD_I2C._proto);
+        if (!addr) {
+            addr = LCD_I2C.DEFAULT_LCD_ADDRESS;
+        }
         obj.lcd = LCD_I2C._init(addr);
         return obj;
     },
 
     _proto: {
-        delete: function() {
+        close: function () {
             return LCD_I2C._dlt(this.lcd);
         },
         begin: function (row, col, charsize) {
+            if (!charsize) {
+                charsize = LCD_I2C.LCD_5x8DOTS;
+            }
             return LCD_I2C._bgn(this.lcd, row, col, charsize);
         },
         setCursor: function (row, col) {
